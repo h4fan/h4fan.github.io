@@ -1,6 +1,6 @@
 title: h4fan security
 description: blog about web sec, bug bounty
-theme: jekyll-theme-hacker
+remote_theme: h4fan/beautiful-jekyll
 author: h4fan
 show_downloads: false
 google_analytics: G-XVS3G74Z7P
