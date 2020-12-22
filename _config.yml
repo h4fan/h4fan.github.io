@@ -11,4 +11,5 @@ gtag: G-XVS3G74Z7P
 plugins:
   - jekyll-sitemap
   - jekyll-paginate
+  - jekyll-feed
 
