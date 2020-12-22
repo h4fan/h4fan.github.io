@@ -1,9 +1,9 @@
 ---
 layout: post
 title:  "alert 1337 - jquery prototype pollution"
----
+tags:  xss, prototype pollution
 
-# alert 1337 - jquery prototype pollution
+---
 
 challenge here 
 https://msrkp.github.io/
