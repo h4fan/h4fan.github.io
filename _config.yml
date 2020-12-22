@@ -11,4 +11,4 @@ plugins:
   - jekyll-sitemap
   - jekyll-remote-theme
 google_site_verification: DiNy6sDUx_btEXz2wpFBmB5mRL0u3Ykjjb3fycp4FYU
-remote_theme: daattali/beautiful-jekyll
+remote_theme: h4fan/beautiful-jekyll
