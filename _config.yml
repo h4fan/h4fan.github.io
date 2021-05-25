@@ -1,6 +1,6 @@
 markdown: kramdown
 
-remote_theme: h4fan/jekyll-theme-chirpy
+remote_theme: h4fan/beautiful-jekyll2
 
 title: h4fan security
 author: h4fan
