@@ -1,6 +1,6 @@
 markdown: kramdown
 
-remote_theme: mmistakes/minimal-mistakes
+remote_theme: "mmistakes/minimal-mistakes@4.23.0"
 
 title: h4fan security
 author: h4fan
