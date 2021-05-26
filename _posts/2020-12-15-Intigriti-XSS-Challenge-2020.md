@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  Intigriti XSS Challenge-2020 Writeup
-tags: xss
+tags: [xss]
 ---
 
 Intigriti's December XSS Challenge https://challenge-1220.intigriti.io/
