@@ -1,6 +1,8 @@
 markdown: kramdown
 
-remote_theme: pmarsceill/just-the-docs
+remote_theme: h4fan/just-the-docs
+
+search_enabled: true
 
 title: h4fan security
 author: h4fan
