@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "alert 1337 - jquery prototype pollution"
-tags:  xss, prototype pollution
+tags:  [xss, prototype pollution]
 
 ---
 
