@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "An unsuccessful expressjs SSTI story"
-tags: ssti,expressjs
+tags: [ssti,expressjs]
 ---
 
 ## Recon
