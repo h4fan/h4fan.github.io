@@ -5,4 +5,3 @@ subtitle: blog about web sec , bug bounty
 ---
 
 
-
