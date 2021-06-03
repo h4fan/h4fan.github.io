@@ -1,11 +1,12 @@
 markdown: kramdown
 
-remote_theme: h4fan/just-the-docs
-
-search_enabled: true
+remote_theme: h4fan/tale
 
 title: h4fan security
 author: h4fan
+
+permalink:    /:year-:month-:day/:title
+paginate:     5
 
 keywords: "web sec,bug bounty,pen test"
 gtag: G-2DJ8NB2H6M
