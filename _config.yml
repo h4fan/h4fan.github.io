@@ -1,4 +1,7 @@
-markdown: GFM
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
 
 remote_theme: h4fan/no-style-please
 
