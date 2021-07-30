@@ -1,0 +1,20 @@
+
+entries:
+  - title: info
+    entries:
+      - title: 不止于安全
+
+  - title: all posts
+    post_list:
+      limit: 10
+      show_more: true
+      show_more_text: See archive...
+      show_more_url: archive.html
+
+  - title: rss
+    url: feed.xml
+  
+  - title: tools
+    entries:
+      - title: autozm
+        url: https://github.com/h4fan/autozm
