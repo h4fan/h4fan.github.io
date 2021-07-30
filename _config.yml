@@ -1,10 +1,25 @@
 markdown: kramdown
 
-remote_theme: h4fan/beautiful-jekyll2
+remote_theme: h4fan/no-style-please
 
-title: h4fan security
+title: h4fan
 author: h4fan
 
+url: https://h4fan.github.io # root address of the site
+baseurl: "" # subpath of the site, e.g. "/blog" (leave it blank "" if you're site shouldn't use a subpath)
+description: > # description of the site (multiple lines allowed)
+  不止于安全
+permalink: /:slug.html
+
+theme_config:
+  appearance: "auto" # can be "light", "dark" or "auto"
+  back_home_text: ".." # customize text for homepage link in post layout
+  date_format: "%Y-%m-%d" # customize how date is formatted
+  show_description: false # show blog description in home page
+
+sass:
+  style: :compressed
+  
 keywords: "web sec,bug bounty,pen test"
 gtag: G-2DJ8NB2H6M
 
@@ -12,4 +27,5 @@ plugins:
   - jekyll-sitemap
   - jekyll-paginate
   - jekyll-feed
+  - jekyll-seo-tag
 
