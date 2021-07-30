@@ -4,7 +4,7 @@ entries:
     entries:
       - title: 不止于安全
 
-  - title: all posts
+  - title: posts
     post_list:
       limit: 10
       show_more: true
