@@ -12,7 +12,7 @@ url: https://h4fan.github.io # root address of the site
 baseurl: "" # subpath of the site, e.g. "/blog" (leave it blank "" if you're site shouldn't use a subpath)
 description: > # description of the site (multiple lines allowed)
   不止于安全
-permalink: /:slug.html
+permalink: /:year/:month/:day/:slug.html
 
 theme_config:
   appearance: "auto" # can be "light", "dark" or "auto"
