@@ -18,3 +18,8 @@ entries:
     entries:
       - title: autozm
         url: https://github.com/h4fan/autozm
+      - title: bpext(burpsuite python插件)
+        url: https://github.com/h4fan/bpext
+      - title: dnssrf(配合ssrf的dnslog平台)
+        url: https://github.com/h4fan/dnssrf
+        
