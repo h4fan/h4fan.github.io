@@ -3,9 +3,9 @@ highlighter: rouge
 kramdown:
   input: GFM
 
-remote_theme: h4fan/no-style-please
+remote_theme: h4fan/beautiful-jekyll2
 
-title: h4fan
+title: h4fan security
 author: h4fan
 
 url: https://h4fan.github.io # root address of the site
