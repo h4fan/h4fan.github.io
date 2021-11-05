@@ -14,6 +14,10 @@ description: > # description of the site (multiple lines allowed)
   不止于安全
 permalink: /:year/:month/:day/:title.html
 
+navbar-links:
+  new blog: "https://blog.tcp.im"
+  
+  
 theme_config:
   appearance: "auto" # can be "light", "dark" or "auto"
   back_home_text: ".." # customize text for homepage link in post layout
