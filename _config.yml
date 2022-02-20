@@ -28,7 +28,7 @@ sass:
   style: :compressed
   
 keywords: "web sec,bug bounty,pen test"
-gtagid: G-2DJ8NB2H6M
+gtag: G-2DJ8NB2H6M
 
 plugins:
   - jekyll-sitemap
