@@ -30,6 +30,12 @@ sass:
 keywords: "web sec,bug bounty,pen test"
 gtag: G-2DJ8NB2H6M
 
+utterances:
+  repository: "h4fan/comment"# GitHub username/repository eg. "daattali/beautiful-jekyll"
+  issue-term: title   # Mapping between blog posts and GitHub issues
+  theme: github-light # Utterances theme
+  label: blog-comments # Label that will be assigned to GitHub Issues created by Utterances
+  
 plugins:
   - jekyll-sitemap
   - jekyll-paginate
