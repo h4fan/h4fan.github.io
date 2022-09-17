@@ -15,7 +15,7 @@ description: > # description of the site (multiple lines allowed)
 permalink: /:year/:month/:day/:title.html
 
 navbar-links:
-  new blog: "https://blog.tcp.im"
+  blog: "https://blog.tcp.im"
   
   
 theme_config:
@@ -36,6 +36,8 @@ utterances:
   theme: github-light # Utterances theme
   label: blog-comments # Label that will be assigned to GitHub Issues created by Utterances
   
+paginate: 5
+
 defaults:
   -
     scope:
