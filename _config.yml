@@ -15,7 +15,7 @@ description: > # description of the site (multiple lines allowed)
 permalink: /:year/:month/:day/:title.html
 
 navbar-links:
-  blog: "https://blog.tcp.im"
+  blog: "https://cybersecurityhq.github.io"
   
   
 theme_config:
