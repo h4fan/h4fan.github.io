@@ -15,8 +15,13 @@ description: > # description of the site (multiple lines allowed)
 permalink: /:year/:month/:day/:title.html
 
 navbar-links:
-  blog: "https://cybersecurityhq.github.io"
+  bLog: "bLog"
+  About me: "aboutme"
   
+social-network-links:
+  rss: true  # remove this line if you don't want to show an RSS link at the bottom
+  mastodon: https://infosec.exchange/@maodun
+  github: h4fan  
   
 theme_config:
   appearance: "auto" # can be "light", "dark" or "auto"
