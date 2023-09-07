@@ -4,7 +4,8 @@ title:  探索New bing
 tags: [bing,llm]
 ---
 
-通过合适的问题，探索Bing Chat的功能，尝试了解Bing Chat的机制。  
+通过合适的问题，探索Bing Chat的功能，尝试了解Bing Chat的机制。 
+
 ## 简版
 ### 1.BQL  
 Bing Chat使用BQL（Bing Query Language）查询，功能比SQL强大。当我后续问BQL是什么时，Bing Chat有时候不会给出如下答案。  
