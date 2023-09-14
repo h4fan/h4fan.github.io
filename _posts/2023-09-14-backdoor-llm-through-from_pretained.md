@@ -29,7 +29,7 @@ trust_remote_code (`bool`, *optional*, defaults to `False`):
 ```
 If trust_remote_code is set to True, it will execute code on your local machine.  
 
-If you read code, you can see that the code will load the `tokenizer_config.json`. (TOKENIZER_CONFIG_FILE = "tokenizer_config.json")[https://github.com/huggingface/transformers/blob/05de038f3d249ce96740885f85fd8d0aa00c29bc/src/transformers/tokenization_utils.py#L49]
+If you read code, you can see that the code will load the `tokenizer_config.json`. [TOKENIZER_CONFIG_FILE = "tokenizer_config.json"](https://github.com/huggingface/transformers/blob/05de038f3d249ce96740885f85fd8d0aa00c29bc/src/transformers/tokenization_utils.py#L49)
 ```json
 {
   "name_or_path": "******",
