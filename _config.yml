@@ -3,7 +3,7 @@ highlighter: rouge
 kramdown:
   input: GFM
 
-remote_theme: h4fan/beautiful-jekyll2
+remote_theme: h4fan/beautiful-jekyll
 
 title: h4fan security
 author: h4fan
@@ -22,7 +22,11 @@ social-network-links:
   rss: true  # remove this line if you don't want to show an RSS link at the bottom
   mastodon: infosec.exchange/@maodun
   github: h4fan  
-  
+
+feed_show_tags: true
+
+post_search: true
+
 theme_config:
   appearance: "auto" # can be "light", "dark" or "auto"
   back_home_text: ".." # customize text for homepage link in post layout
