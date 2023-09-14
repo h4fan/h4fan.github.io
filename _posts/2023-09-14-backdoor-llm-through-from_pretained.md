@@ -1,11 +1,12 @@
 ---
 layout: post
-title:  Beginner Level: Backdoor llm through from_pretrained
+title:  Beginner Level - Backdoor llm through from_pretrained
 tags: [llm,backdoor]
 ---
 
 You cloned the code from github. And you downloaded the model file from some website. You run the demo code. Then you got calced.
 This is the demo code taken from `***`. Is it safe to run the code?  
+
 ```python
 tokenizer = AutoTokenizer.from_pretrained("./model-int4/", trust_remote_code=True)
 ```
@@ -18,7 +19,7 @@ import os
 os.system('/System/Applications/Calculator.app/Contents/MacOS/Calculator')
 ```
 Let's examine the function.
-(from_pretrained)[https://github.com/huggingface/transformers/blob/05de038f3d249ce96740885f85fd8d0aa00c29bc/src/transformers/models/auto/tokenization_auto.py#L568]
+[from_pretrained](https://github.com/huggingface/transformers/blob/05de038f3d249ce96740885f85fd8d0aa00c29bc/src/transformers/models/auto/tokenization_auto.py#L568)
 
 ```
 trust_remote_code (`bool`, *optional*, defaults to `False`):
@@ -51,6 +52,6 @@ Always check the model files. Load from trusted websites. Will you? Do you have 
 
 
 ## code
-(register_for_auto_class)[https://github.com/huggingface/transformers/blob/05de038f3d249ce96740885f85fd8d0aa00c29bc/src/transformers/modeling_utils.py#L3751]
-(get_class_from_dynamic_module)[https://github.com/huggingface/transformers/blob/05de038f3d249ce96740885f85fd8d0aa00c29bc/src/transformers/dynamic_module_utils.py#L378C15-L378C15]
+[register_for_auto_class](https://github.com/huggingface/transformers/blob/05de038f3d249ce96740885f85fd8d0aa00c29bc/src/transformers/modeling_utils.py#L3751)
+[get_class_from_dynamic_module](https://github.com/huggingface/transformers/blob/05de038f3d249ce96740885f85fd8d0aa00c29bc/src/transformers/dynamic_module_utils.py#L378C15-L378C15)
 
