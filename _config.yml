@@ -40,7 +40,7 @@ sass:
   style: :compressed
   
 keywords: "web sec,bug bounty,pen test"
-# gtag: G-2DJ8NB2H6M
+gtag: G-2DJ8NB2H6M
 cloudflare_analytics: 3ccd8da2623244f4bd1510633c43fdba
 
 utterances:
