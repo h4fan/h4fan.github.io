@@ -15,8 +15,6 @@ description: > # description of the site (multiple lines allowed)
 permalink: /:year/:month/:day/:title.html
 
 navbar-links:
-  bLog: "bLog"
-  About me: "aboutme"
   Tags: "tags"
   
 social-network-links:
