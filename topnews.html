@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top News - Your all in one Tech & Sec news</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 0;
+}
+a {
+    text-decoration: none;
+}
+a:link{
+    text-decoration: none;
+    color: rgb(61, 61, 61);
+}
+
+h1 {
+text-align: center;
+}
+
+ul {
+list-style-type: none;
+padding: 0;
+}
+
+li {
+padding: 10px;
+border-bottom: 1px solid #ccc;
+}
+
+@media only screen and (max-width: 600px) {
+li {
+font-size: 14px;
+}
+}
+</style>
+</head>
+<body>
+
+<ul id="newsList">
+<!-- News titles will be dynamically added here -->
+</ul>
+
+<div>You have spent <label id="time">0</label> min(s) on this site.</div>
+
+<script>
+// News titles array
+const newsTitles = [
+];
+
+// Function to add news titles to the list
+function addNewsTitles(newsTitlesArray,site) {
+const newsList = document.getElementById('newsList');
+newsTitlesArray.forEach(title => {
+const listItem = document.createElement('li');
+
+const link = document.createElement('a');
+const textdata = title.split(',').slice(1).join(',')
+if(textdata.length == 0){
+    link.textContent = site+' '+title;
+}
+else{
+    link.textContent = site+' '+textdata;
+}
+
+
+if(title.split(',')[0].indexOf('http')==0){
+    link.href=title.split(',')[0];
+}
+else{
+    link.href='#';
+}
+
+link.target='_blank';
+listItem.appendChild(link);
+newsList.appendChild(listItem);
+});
+}
+
+// Call the function to add news titles
+const apidomain = "https://topnews-4tk.pages.dev"
+const apis={'/hnews':"[HN]",'/rd':"[RN]",'/g2':'[GT]','/h1':"[H1]",'/xz':'[XZ]','/sb':"[SB]",'/sw':'[SW]','/st':"[ST]"}
+
+Object.entries(apis).forEach(([api,site])=>{
+    fetch(apidomain + api).then(response=>{
+    return response.json()
+}).then(data =>{
+    addNewsTitles(data,site)
+})
+})
+
+</script>
+
+<script>
+    setInterval(function(){
+        const timespent = parseInt(document.getElementById('time').innerText);
+        document.getElementById('time').innerText = timespent + 1;
+    },60000)
+</script>
+</body>
+</html>
