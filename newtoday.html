@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top News Today - Your all in one Tech & Sec news</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 0;
+}
+a {
+    text-decoration: none;
+}
+a:link{
+    text-decoration: none;
+    color: rgb(61, 61, 61);
+}
+
+h1 {
+text-align: center;
+}
+
+ul {
+list-style-type: none;
+padding: 0;
+}
+
+li {
+padding: 10px;
+border-bottom: 1px solid #ccc;
+}
+
+@media only screen and (max-width: 600px) {
+li {
+font-size: 14px;
+}
+}
+</style>
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "lpt04i0b6e");
+</script>
+</head>
+<body>
+
+<ul id="newsList">
+<!-- News titles will be dynamically added here -->
+</ul>
+
+<div>You have spent <label id="time">0</label> min(s) on this site.</div>
+
+<script>
+// News titles array
+const newsTitles = [
+];
+
+// Function to add news titles to the list
+function addNewsTitles(newsTitlesArray, apis) {
+const newsList = document.getElementById('newsList');
+newsTitlesArray.forEach(title => {
+const listItem = document.createElement('li');
+
+const link = document.createElement('a');
+const textdata = title['summary']
+if(textdata.length == 0){
+    link.textContent = apis[title['newstype']]+' '+title['url'];
+}
+else{
+    link.textContent = apis[title['newstype']]+' '+textdata;
+}
+
+
+if(title['url'].indexOf('http')==0){
+    link.href=title['url']
+}
+else{
+    link.href='#';
+}
+
+link.target='_blank';
+listItem.appendChild(link);
+newsList.appendChild(listItem);
+});
+}
+
+// Call the function to add news titles
+
+const apis={1:"[HN]",2:"[RN]",3:'[GT]',4:"[H1]",5:'[XZ]',6:"[SB]",7:'[SW]',8:"[ST]"}
+const apidomain = "https://topnews-4tk.pages.dev"
+  
+fetch(apidomain + '/today').then(response=>{
+    return response.json()
+}).then(data =>{
+    addNewsTitles(data, apis)
+})
+
+</script>
+
+<script>
+    setInterval(function(){
+        const timespent = parseInt(document.getElementById('time').innerText);
+        document.getElementById('time').innerText = timespent + 1;
+    },60000)
+</script>
+</body>
+</html>
