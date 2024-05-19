@@ -17,6 +17,7 @@ permalink: /:year/:month/:day/:title.html
 navbar-links:
   Tags: "tags"
   TopNews: "topnews"
+  NewToday: "newstoday"
   
 social-network-links:
   rss: true  # remove this line if you don't want to show an RSS link at the bottom
