@@ -12,7 +12,7 @@ tags: [news,tech]
 [TopNews](/topnews)
 ![topnews](/static/img/topnews.png)
 [NewsToday](/newstoday)
-![newstoday](/static/img/newstoday.pnd)
+![newstoday](/static/img/newstoday.png)
 
 
 # 方法
