@@ -9,11 +9,11 @@ tags: [bitlocker,crypt]
 
 # BitLocker的加密流程
 Encrypt used disk space only 和 Encrypt entire drive 怎么选？  
-![image](https://camo.githubusercontent.com/40c730ddb36d1bc66f1de0c4cc3dcfe592e4c144a3c4a2ce16ee3dfd4e83de68/68747470733a2f2f6d6d62697a2e717069632e636e2f737a5f6d6d62697a5f706e672f615a4f4951473732466a546539544c61796c617662324f59537344743146306641506648563833637664526a34534533716763767249456673586173455a596b46703678616a69623445447455416254447377777059412f3634303f77785f666d743d706e6726777866726f6d3d352677785f6c617a793d312677785f636f3d31)
+![image](/static/img/bitlocker_img1.webp)
 # BitLocker使用的什么加解密算法？
 XTS-AES  
 XTS-AES is a tweakable block cipher designed for encryption of sector-based storage. XTS-AES acts on 8 data units of 128 bits or more and uses the AES block cipher as a subroutine. The key material for XTS9 AES consists of a data encryption key (used by the AES block cipher) as well as a “tweak key” that is used 10 to incorporate the logical position of the data block into the encryption.  
-![image](https://camo.githubusercontent.com/43c60109b854194c2238d624f766151c8f92c367d1e36043c693c89a3c51277c/68747470733a2f2f6d6d62697a2e717069632e636e2f737a5f6d6d62697a5f706e672f615a4f4951473732466a546539544c61796c617662324f595373447431463066617557576a69616669616961544271377669616733766963696256677a4e636b4c6961674a36564f744d54746238354c524a5665493831716c794747772f3634303f77785f666d743d706e6726777866726f6d3d352677785f6c617a793d312677785f636f3d31)  
+![image](/static/img/bitlocker_img2.webp)  
 https://en.wikipedia.org/wiki/Disk_encryption_theory  
 （macOS的FileVault 2也是使用的该算法）
 
