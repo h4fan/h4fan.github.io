@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  TopNews和NewsToday-一个页面中查看你关注的所有站点
-tags: [ai,chatbot]
+tags: [news,tech]
 ---
  
 
