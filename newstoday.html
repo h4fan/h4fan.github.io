@@ -96,6 +96,9 @@ const apidomain = "https://topnews-4tk.pages.dev"
 fetch(apidomain + '/today').then(response=>{
     return response.json()
 }).then(data =>{
+    if(data.length == 0){
+        location.href="/topnews";
+    }
     addNewsTitles(data, apis)
 })
 
