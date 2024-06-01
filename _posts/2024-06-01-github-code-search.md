@@ -16,12 +16,12 @@ tags: [news,tech]
 ![fake-answer.png](/static/img/fake-answer.png)
 
 # 搜索求证
-找到一处讨论[Add branch as a search filter #8564](https://github.com/orgs/community/discussions/8564) 和官方链接[GitHub Code Search Limitations](https://docs.github.com/en/search-github/github-code-search/about-github-code-search#limitations)
+找到一处讨论[Add branch as a search filter #8564](https://github.com/orgs/community/discussions/8564) 和官方链接[GitHub Code Search Limitations](https://docs.github.com/en/search-github/github-code-search/about-github-code-search#limitations)  
 `We currently only support searching for code on the default branch of a repository. The query length is limited to 1000 characters.`  
 官方文档显示，目前只支持默认分支的代码搜索。
 
 # 思考
-这个点能否利用呢？
+这个点能否利用呢？  
 如果将代码放在其他分支，是否就可以避免被通过Github Code Search搜索到？  
 当然，敏感的信息（如密钥）肯定还是不应该明文写在代码里面并且提交到Github上面。
 
