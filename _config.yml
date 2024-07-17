@@ -19,7 +19,6 @@ navbar-links:
   TopNews: "topnews"
   NT: "newstoday"
   
-  
 social-network-links:
   rss: true  # remove this line if you don't want to show an RSS link at the bottom
   mastodon: infosec.exchange/@maodun
