@@ -17,7 +17,7 @@ permalink: /:year/:month/:day/:title.html
 navbar-links:
   Tags: "tags"
   TopNews: "topnews"
-  NewsToday: "newstoday"
+  NT: "newstoday"
   
   
 social-network-links:
