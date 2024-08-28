@@ -26,8 +26,8 @@ iwconfig，发现wifi没有连成功。再次手动运行命令，又成功了�
 以为是没有开机自动启动，但是这个说法不对，因为之前一直是好的，能够正常运行。
 `systemctl status wpa_supplicant`，显示loaded(inactive)。
 
-再次去ai里面搜索，怎么添加开机启动。发现不止wpa_supplicant这个服务，还有一个wpa_supplicant@<wificard>名称的服务。
-`systemctl status wpa_supplicant@<wificard>`，一看，说是密码不对。
+再次去ai里面搜索，怎么添加开机启动。发现不止wpa_supplicant这个服务，还有一个wpa_supplicant@\< wificard>名称的服务。
+`systemctl status wpa_supplicant@\< wificard>`，一看，说是密码不对。
 
 我就奇怪了，密码没有改，怎么就不对了？
 
