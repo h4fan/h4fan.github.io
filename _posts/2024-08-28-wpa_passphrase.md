@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  the 'bad' wpa_passphrase
+title:  the 'bad' psk
 tags: [tech,pve]
 ---
 
@@ -9,21 +9,21 @@ tags: [tech,pve]
 自然我就上不了网了。
 
 ## 寻找原因
-遵循能够运行就不要改动的原则，我已经不记得我是如何配置的了。
+遵循能够运行就不要改动的原则，我已经不记得我是如何配置的了。  
 赶紧查看我的pve的博客，找到命令。找到配置文件，修改ssid，运行
 `wpa_supplicant -B -i <wificard> -c /etc/xxx.conf`的命令，成功，连上了wifi，原来修改如此简单，重启一下。
 
-咋又没有网了？
-赶紧插上显示器，连上键盘去看一看。
+咋又没有网了？  
+赶紧插上显示器，连上键盘去看一看。  
 iwconfig，发现wifi没有连成功。再次手动运行命令，又成功了。
 
-再重启，发现还是不行。
+再重启，发现还是不行。  
 难道是路由器里面改了配置，把我的mac屏蔽了？
 
-换了一个新的ssid，依然是自动连接不成功，手动连接成功。
+换了一个新的ssid，依然是自动连接不成功，手动连接成功。  
 中间问了chatglm和doubao，坑d啊，给的还是错误的命令，执行报错。
 
-以为是没有开机自动启动，但是这个说法不对，因为之前一直是好的，能够正常运行。
+以为是没有开机自动启动，但是这个说法不对，因为之前一直是好的，能够正常运行。  
 `systemctl status wpa_supplicant`，显示loaded(inactive)。
 
 再次去ai里面搜索，怎么添加开机启动。发现不止wpa_supplicant这个服务，还有一个wpa_supplicant@\< wificard>名称的服务。
@@ -47,19 +47,20 @@ network={
    
 }
 ```
-密码怎么就不对？
-拿着wpa_passphrase生成密码，发现是一个新的psk，问题找到了。确实是密码不对。
-重新生成密码，更新psk的配置，重启，连接成功。
+密码怎么就不对？  
+拿着wpa_passphrase生成密码，发现是一个新的psk，问题找到了。确实是密码不对。  
+重新生成密码，更新psk的配置，重启，连接成功。  
 测试的时候，使用的是明文的密码，但是配置文件里面使用的是生成的密码，所以测试能成功，重启之后连不上。
 
 ## wpa_passphrase
-
+```
 $ wpa_passphrase MYSSID passphrase
 network={
     ssid="MYSSID"
     #psk="passphrase"
     psk=59e0d07fa4c7741797a4e394f38a5c321e3bed51d54ad5fcbd3f84bc7415d73d
 }
+```
 为什么密码不对呢？因为wpa_passphrase生成的psk是和ssid有关系的，所以ssid改了，但是密码没有改，psk也是不一样的。
 
 wpa_passphrase pre-computes PSK entries for network configuration blocks of a wpa_supplicant.conf file. An ASCII passphrase and SSID are used to generate a 256-bit PSK.
