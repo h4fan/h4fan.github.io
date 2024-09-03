@@ -54,6 +54,5 @@ console.log(b,a)
 https://www.cnblogs.com/cench/p/6019453.html
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Assignment
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var
-
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const
-
+https://javascript.info/object-copy
