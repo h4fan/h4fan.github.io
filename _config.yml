@@ -3,7 +3,7 @@ highlighter: rouge
 kramdown:
   input: GFM
 
-remote_theme: h4fan/beautiful-jekyll
+remote_theme: h4fan/minimal-mistakes
 
 title: h4fan security
 author: h4fan
@@ -71,4 +71,5 @@ plugins:
   - jekyll-paginate
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-include-cache
 
