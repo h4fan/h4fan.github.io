@@ -5,13 +5,17 @@ kramdown:
 
 remote_theme: h4fan/minimal-mistakes
 
-title: h4fan security
+minimal_mistakes_skin    : "default"
+
+
+title: "h4fan security"
 author: h4fan
+name                     : "h4fan"
+description              : "Another security website."
 
 url: https://h4fan.github.io # root address of the site
 baseurl: "" # subpath of the site, e.g. "/blog" (leave it blank "" if you're site shouldn't use a subpath)
-description: > # description of the site (multiple lines allowed)
-  不止于安全
+
 permalink: /:year/:month/:day/:title.html
 
 navbar-links:
