@@ -20,6 +20,7 @@ permalink: /:year/:month/:day/:title.html
 
 navbar-links:
   Tags: "tags"
+  Archive: "archive"
   Story: "https://blog.tcp.im"
   
 social-network-links:
