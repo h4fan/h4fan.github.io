@@ -11,7 +11,7 @@ minimal_mistakes_skin    : "default"
 title: "h4fan security"
 author: h4fan
 name                     : "h4fan"
-description              : "Another security website."
+description              : "blog about security, tech"
 
 url: https://h4fan.github.io # root address of the site
 baseurl: "" # subpath of the site, e.g. "/blog" (leave it blank "" if you're site shouldn't use a subpath)
