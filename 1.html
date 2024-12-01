@@ -1,21 +1,14 @@
 ---
 layout: page
 title: loading
-subtitle: cyberchef
+subtitle: malware from Cyberchef
 ---
-
 
 <head>
         <script type="application/javascript">
             "use strict";
 
-            // Load theme before the preloader is shown
-            try {
-                document.querySelector(":root").className = (JSON.parse(localStorage.getItem("options")) || {}).theme;
-            } catch (err) {
-                // LocalStorage access is denied by security settings
-            }
-
+           
             // Define loading messages
             var loadingMsgs = [
                 "Proving P = NP...",
