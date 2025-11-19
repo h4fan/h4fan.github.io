@@ -26,7 +26,7 @@ navbar-links:
   
 social-network-links:
   rss: true  # remove this line if you don't want to show an RSS link at the bottom
-  mastodon: infosec.exchange/@maodun
+  #mastodon: infosec.exchange/@maodun
   github: h4fan
   email: "techsecfan@outlook.com"
 
