@@ -204,6 +204,8 @@ pre code {
     font-family: 'SF Mono', 'Fira Code', monospace;
     margin: 1.5rem 0;
     box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+    white-space: pre-wrap !important;  /* 强制保留换行并自动折行 */
+    word-break: break-word;           /* 避免长单词溢出 */
 }
 /* 修复 pre 内部的 code 不继承行内样式 */
 pre code {
