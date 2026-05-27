@@ -175,6 +175,7 @@ body {
     display: inline-block;
 }
 
+
 /* ------------------------------------ 代码块 & 行内代码（高可读性） */
 /* 行内代码 */
 .blog-post code,
@@ -190,30 +191,49 @@ li code {
     border: 1px solid #e2e6ea;
     white-space: nowrap;
 }
-/* 代码块（多行）- 保留格式，支持横向滚动 */
-.highlight,
+
+/* 代码块外层容器：负责背景、圆角、阴影、外边距 */
 pre,
-pre code {
+.highlight {
     background: #1e2a36;
-    color: #e4eef5;
     border-radius: 16px;
-    padding: 1rem;
-    font-size: 0.88rem;
-    line-height: 1.5;
-    overflow-x: auto;
-    font-family: 'SF Mono', 'Fira Code', monospace;
+    padding: 0;                /* 内边距交给内部的 code */
     margin: 1.5rem 0;
     box-shadow: 0 5px 12px rgba(0,0,0,0.1);
-    white-space: pre !important;      /* 保留所有空格和换行，不自动折行 */
+    overflow: hidden;          /* 强制圆角裁剪，防止滚动条凸出 */
 }
-pre code {
-    background: none;
-    padding: 0;
+
+/* 代码块内层真正的内容：负责滚动、内边距、字体、保留换行 */
+pre code,
+.highlight code {
+    display: block;
+    padding: 1rem;
+    overflow-x: auto;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: #e4eef5;
+    background: transparent;
     border: none;
-    color: inherit;
-    white-space: inherit;             /* 继承 pre 的 white-space */
+    white-space: pre;          /* 保留空格与换行，长行出现滚动条 */
 }
-/* 自定义滚动条 */
+
+/* 可选：美化滚动条（不影响边框） */
+pre code::-webkit-scrollbar,
+.highlight code::-webkit-scrollbar {
+    height: 6px;
+}
+pre code::-webkit-scrollbar-track,
+.highlight code::-webkit-scrollbar-track {
+    background: #2d3e4f;
+    border-radius: 8px;
+}
+pre code::-webkit-scrollbar-thumb,
+.highlight code::-webkit-scrollbar-thumb {
+    background: #5f7f9a;
+    border-radius: 8px;
+}
+
 pre::-webkit-scrollbar {
     height: 6px;
 }
@@ -405,17 +425,4 @@ pre::-webkit-scrollbar-thumb {
     color: inherit;  /* 继承 pre 的颜色，防止被浏览器默认样式覆盖 */
 }
 
-/* 最终覆盖：确保所有代码块正常显示换行 */
-pre,
-pre code,
-.highlight,
-.highlight pre,
-.highlight code,
-.blog-post pre,
-.blog-post code {
-    white-space: pre !important;      /* 保留换行 */
-    overflow-x: auto !important;      /* 长行滚动 */
-    display: block !important;
-    word-wrap: normal !important;
-    word-break: normal !important;
-}
+
