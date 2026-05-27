@@ -245,3 +245,300 @@ pre code {
     border-radius: 12px;
     margin: 1rem 0;
 }
+
+/* ========================================
+   博客页面深度美化样式
+   适用于 Beautiful Jekyll 主题
+   ======================================== */
+
+/* ---------- 全局字体与背景 ---------- */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background-color: #fafafc;
+    color: #1e2a3e;
+    scroll-behavior: smooth;
+}
+
+/* 如果希望使用系统字体，无需额外加载 Inter，但可以保留回退 */
+
+/* ---------- 导航栏优化 ---------- */
+.navbar.bg-dark {
+    background: linear-gradient(135deg, #1a2a3a 0%, #0f1a24 100%) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 0.7rem 0;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -0.3px;
+    background: linear-gradient(120deg, #fff, #aaa);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+    margin: 0 0.2rem;
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    transition: all 0.2s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+/* ---------- 文章标题区 (header-section) ---------- */
+.post-heading h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #1e466e, #2c5a8c);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.75rem;
+}
+
+.post-meta {
+    font-size: 0.95rem;
+    color: #5d6f83;
+    border-left: 3px solid #2c7da0;
+    padding-left: 1rem;
+    display: inline-block;
+}
+
+/* ---------- 正文核心样式 ---------- */
+.blog-post {
+    font-size: 1.07rem;
+    line-height: 1.75;
+    color: #2c3e4e;
+}
+
+.blog-post p {
+    margin-bottom: 1.5rem;
+}
+
+/* 标题层次优化 */
+.blog-post h1, .blog-post h2, .blog-post h3, .blog-post h4 {
+    margin-top: 2em;
+    margin-bottom: 0.8em;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    position: relative;
+}
+
+.blog-post h2 {
+    font-size: 1.8rem;
+    border-left: 5px solid #2c7da0;
+    padding-left: 1rem;
+}
+
+.blog-post h3 {
+    font-size: 1.4rem;
+    color: #2c5870;
+}
+
+/* 引用块 */
+.blog-post blockquote {
+    background: #eef4fa;
+    border-left: 5px solid #2c7da0;
+    padding: 1.2rem 1.8rem;
+    border-radius: 16px;
+    font-style: normal;
+    color: #2c3e50;
+    margin: 1.8rem 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+}
+
+/* 链接 */
+.blog-post a:not(.btn) {
+    color: #2c7da0;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(44,125,160,0.3);
+    transition: border 0.2s;
+}
+
+.blog-post a:not(.btn):hover {
+    border-bottom-color: #2c7da0;
+    color: #1a5a77;
+}
+
+/* 图片 */
+.blog-post img {
+    max-width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px -8px rgba(0,0,0,0.1);
+    margin: 1.8rem auto;
+    display: block;
+}
+
+/* ---------- 代码块与行内代码（修复看不见的问题） ---------- */
+/* 行内代码 */
+.blog-post code,
+article code,
+p code,
+li code {
+    background-color: #f0f2f5 !important;
+    color: #c0342c !important;
+    padding: 0.2rem 0.45rem !important;
+    font-size: 0.88rem !important;
+    border-radius: 8px !important;
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace !important;
+    border: 1px solid #e2e6ea !important;
+    white-space: nowrap;
+}
+
+/* 代码块 (多行) */
+.highlight,
+pre,
+pre code {
+    background: #1e2a36 !important;
+    color: #e4eef5 !important;
+    border-radius: 16px !important;
+    padding: 1rem !important;
+    font-size: 0.88rem !important;
+    line-height: 1.5 !important;
+    overflow-x: auto;
+    font-family: 'SF Mono', 'Fira Code', monospace !important;
+    margin: 1.5rem 0;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+}
+
+/* 确保代码块内部的 code 不受行内样式影响 */
+pre code {
+    background: none !important;
+    padding: 0 !important;
+    border: none !important;
+    color: inherit !important;
+    white-space: pre;
+}
+
+/* 自定义滚动条（可选） */
+pre::-webkit-scrollbar {
+    height: 6px;
+}
+pre::-webkit-scrollbar-track {
+    background: #2d3e4f;
+    border-radius: 8px;
+}
+pre::-webkit-scrollbar-thumb {
+    background: #5f7f9a;
+    border-radius: 8px;
+}
+
+/* ---------- 标签区域 (blog-tags) ---------- */
+.blog-tags {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 2px solid #e3e8ef;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-items: baseline;
+}
+
+.blog-tags span {
+    font-weight: 700;
+    color: #2c3e50;
+    margin-right: 0.5rem;
+}
+
+.blog-tags a {
+    background: #eef2f8;
+    padding: 0.3rem 1rem;
+    border-radius: 40px;
+    font-size: 0.8rem;
+    color: #2c7da0;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.blog-tags a:hover {
+    background: #2c7da0;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* ---------- 分页按钮 (blog-pager) ---------- */
+.pagination.blog-pager {
+    justify-content: space-between;
+    margin: 3rem 0 2rem;
+}
+
+.page-link {
+    border-radius: 50px;
+    padding: 0.6rem 1.8rem;
+    background: white;
+    border: 1px solid #dce4ec;
+    color: #2c7da0;
+    font-weight: 500;
+    transition: all 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.page-link:hover {
+    background: #2c7da0;
+    border-color: #2c7da0;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(44,125,160,0.2);
+}
+
+/* ---------- 右侧目录 (toc-container) 美化 ---------- */
+.toc-container {
+    background: white !important;
+    border-left: none !important;
+    border-radius: 24px !important;
+    padding: 1.2rem 1rem !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eef2f6;
+}
+
+.toc-container h5 {
+    font-weight: 700;
+    color: #1e466e;
+    border-bottom: 2px solid #e0e8f0;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.toc-link {
+    color: #3a5c7c;
+    font-size: 0.88rem;
+    padding: 0.2rem 0;
+    display: inline-block;
+    transition: all 0.1s;
+}
+
+.toc-link:hover {
+    color: #2c7da0;
+    transform: translateX(3px);
+}
+
+.toc-link.level-2 {
+    font-weight: 600;
+}
+
+/* ---------- 响应式微调 ---------- */
+@media (max-width: 768px) {
+    .post-heading h1 {
+        font-size: 1.9rem;
+    }
+    .blog-post {
+        font-size: 1rem;
+    }
+    .blog-post h2 {
+        font-size: 1.5rem;
+    }
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+    .toc-container {
+        display: none;  /* 手机端隐藏目录，避免拥挤 */
+    }
+}
