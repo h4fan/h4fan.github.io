@@ -5,7 +5,6 @@ kramdown:
 
 remote_theme: h4fan/beautiful-jekyll
 
-
 minimal_mistakes_skin    : "default"
 
 title: "h4fan security"
