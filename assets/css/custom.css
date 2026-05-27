@@ -404,3 +404,18 @@ pre::-webkit-scrollbar-thumb {
 .highlight .n {
     color: inherit;  /* 继承 pre 的颜色，防止被浏览器默认样式覆盖 */
 }
+
+/* 最终覆盖：确保所有代码块正常显示换行 */
+pre,
+pre code,
+.highlight,
+.highlight pre,
+.highlight code,
+.blog-post pre,
+.blog-post code {
+    white-space: pre !important;      /* 保留换行 */
+    overflow-x: auto !important;      /* 长行滚动 */
+    display: block !important;
+    word-wrap: normal !important;
+    word-break: normal !important;
+}
