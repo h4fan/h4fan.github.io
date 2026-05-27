@@ -1,29 +1,28 @@
 /* ========== 卡片化文章列表 ========== */
 
-/* 文章卡片基本样式 */
+/* 文章卡片基本样式 - 增加内边距，让文字呼吸 */
 .post-preview {
   background: #ffffff;
-  border-radius: 24px;
-  padding: 1.5rem;
+  border-radius: 28px;          /* 稍微增大圆角 */
+  padding: 2rem 2rem 1.8rem;    /* 上左右下留白，左右尤其重要 */
   transition: transform 0.25s ease, box-shadow 0.3s ease;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03), 0 2px 6px rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(0, 0, 0, 0.03);
-  height: 100%;    /* 保证卡片填满列的高度 */
+  height: 100%;
 }
 
-/* 悬停效果：轻微上浮 + 阴影加深 */
+/* 悬停效果保持不变 */
 .post-preview:hover {
   transform: translateY(-5px);
   box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15);
   border-color: rgba(0, 123, 255, 0.2);
 }
 
-/* 卡片内标题样式 */
+/* 卡片内标题样式 - 确保左右无负外边距 */
 .post-preview .post-title {
   font-size: 1.5rem;
   font-weight: 700;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.5rem 0;        /* 移除上边距，只保留下边距 */
   color: #1e2a3a;
   line-height: 1.3;
 }
@@ -32,14 +31,14 @@
   font-size: 1.1rem;
   font-weight: 500;
   color: #4a627a;
-  margin-bottom: 0.75rem;
+  margin: 0 0 0.75rem 0;
 }
 
 /* 元信息样式 */
 .post-preview .post-meta {
   font-size: 0.85rem;
   color: #6c757d;
-  margin-bottom: 1rem;
+  margin: 0 0 1rem 0;          /* 统一边距方向 */
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -50,7 +49,7 @@
   font-size: 0.95rem;
   line-height: 1.5;
   color: #495057;
-  margin-top: 0.75rem;
+  margin: 0.75rem 0 0.5rem 0;
 }
 
 .post-read-more {
@@ -61,40 +60,40 @@
   text-decoration: none;
 }
 
-.post-read-more:hover {
-  text-decoration: underline;
-}
-
-/* 缩略图样式微调（保持响应式） */
+/* 缩略图样式 - 确保图片左右不溢出，且下方留空 */
 .post-image img {
-  border-radius: 16px;
+  border-radius: 20px;
   width: 100%;
   height: auto;
   object-fit: cover;
-  transition: opacity 0.2s;
+  margin-bottom: 1rem;
+  display: block;              /* 避免图片下方空隙 */
 }
 
+/* 合并三种缩略图类的 margin-bottom 已统一 */
 .post-image-normal img,
 .post-image-small img,
 .post-image-short img {
   margin-bottom: 1rem;
 }
 
-/* 标签区域优化 */
+/* 标签区域优化 - 增加上下间距，同时确保左右留白由卡片padding负责 */
 .blog-tags {
-  margin-top: 1rem;
-  padding-top: 0.5rem;
+  margin-top: 1.2rem;
+  padding-top: 0.75rem;
   border-top: 1px solid #e9ecef;
   font-size: 0.8rem;
 }
 
 .blog-tags a {
   background: #eef2ff;
-  padding: 0.2rem 0.7rem;
-  border-radius: 30px;
+  padding: 0.3rem 0.9rem;
+  border-radius: 40px;
   color: #0d6efd;
   text-decoration: none;
   transition: all 0.2s;
+  display: inline-block;       /* 让标签有更好的内边距表现 */
+  margin-bottom: 0.25rem;
 }
 
 .blog-tags a:hover {
@@ -102,13 +101,16 @@
   color: white;
 }
 
-/* 响应式：小屏幕减小内边距 */
+/* 响应式：小屏幕减小内边距，但仍保持左右留白 */
 @media (max-width: 768px) {
   .post-preview {
-    padding: 1.2rem;
-    border-radius: 20px;
+    padding: 1.5rem;           /* 手机上 1.5rem 已经足够 */
+    border-radius: 24px;
   }
   .post-preview .post-title {
     font-size: 1.3rem;
+  }
+  .blog-tags a {
+    padding: 0.2rem 0.7rem;
   }
 }
