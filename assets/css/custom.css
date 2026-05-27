@@ -190,7 +190,7 @@ li code {
     border: 1px solid #e2e6ea;
     white-space: nowrap;
 }
-/* 代码块（多行） */
+/* 代码块（多行）- 保留格式，支持横向滚动 */
 .highlight,
 pre,
 pre code {
@@ -204,16 +204,14 @@ pre code {
     font-family: 'SF Mono', 'Fira Code', monospace;
     margin: 1.5rem 0;
     box-shadow: 0 5px 12px rgba(0,0,0,0.1);
-    white-space: pre-wrap !important;  /* 强制保留换行并自动折行 */
-    word-break: break-word;           /* 避免长单词溢出 */
+    white-space: pre !important;      /* 保留所有空格和换行，不自动折行 */
 }
-/* 修复 pre 内部的 code 不继承行内样式 */
 pre code {
     background: none;
     padding: 0;
     border: none;
     color: inherit;
-    white-space: pre;
+    white-space: inherit;             /* 继承 pre 的 white-space */
 }
 /* 自定义滚动条 */
 pre::-webkit-scrollbar {
