@@ -1,9 +1,3 @@
-/* ==================================================================
-   custom.css - 优化版
-   适用于 Beautiful Jekyll 主题
-   合并重复定义、精简 !important、保留完整美化效果
-   ================================================================== */
-
 /* ------------------------------------ 全局与字体 */
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
