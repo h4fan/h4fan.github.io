@@ -54,7 +54,7 @@ ms_clarity: lpt04i0b6e
 #  theme: github-light # Utterances theme
 #  label: blog-comments # Label that will be assigned to GitHub Issues created by Utterances
   
-paginate: 5
+paginate: 6
 
 defaults:
   -
