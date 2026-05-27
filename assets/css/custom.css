@@ -202,3 +202,46 @@ html {
     background-color: #2a7ae2;
     color: white;
 }
+
+/* ========== 修复代码可见性 ========== */
+/* 行内代码（例如 `var x = 1`） */
+p code,
+li code,
+.blog-post code {
+    background-color: #f2f2f2 !important;
+    color: #c7254e !important;
+    padding: 0.2rem 0.4rem !important;
+    font-size: 0.875rem !important;
+    border-radius: 6px !important;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace !important;
+    border: 1px solid #e1e4e8 !important;
+}
+
+/* 代码块（多行，pre 标签） */
+pre,
+pre code {
+    background-color: #1e1e1e !important;
+    color: #d4d4d4 !important;
+    display: block;
+    padding: 1rem !important;
+    border-radius: 12px !important;
+    overflow-x: auto;
+    font-size: 0.85rem !important;
+    font-family: 'SFMono-Regular', Consolas, monospace !important;
+    line-height: 1.5;
+}
+
+/* 确保代码块内部的 code 不继承行内样式 */
+pre code {
+    background: none !important;
+    padding: 0 !important;
+    border: none !important;
+    color: inherit !important;
+}
+
+/* 可选：增加语法高亮支持（如果你有 rouge 或 pygments） */
+.highlight {
+    background: #1e1e1e;
+    border-radius: 12px;
+    margin: 1rem 0;
+}
