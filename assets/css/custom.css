@@ -1,0 +1,114 @@
+/* ========== 卡片化文章列表 ========== */
+
+/* 文章卡片基本样式 */
+.post-preview {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 1.5rem;
+  transition: transform 0.25s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03), 0 2px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  height: 100%;    /* 保证卡片填满列的高度 */
+}
+
+/* 悬停效果：轻微上浮 + 阴影加深 */
+.post-preview:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15);
+  border-color: rgba(0, 123, 255, 0.2);
+}
+
+/* 卡片内标题样式 */
+.post-preview .post-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: #1e2a3a;
+  line-height: 1.3;
+}
+
+.post-preview .post-subtitle {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #4a627a;
+  margin-bottom: 0.75rem;
+}
+
+/* 元信息样式 */
+.post-preview .post-meta {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* 摘要区域 */
+.post-preview .post-entry {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #495057;
+  margin-top: 0.75rem;
+}
+
+.post-read-more {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-weight: 500;
+  color: #0d6efd;
+  text-decoration: none;
+}
+
+.post-read-more:hover {
+  text-decoration: underline;
+}
+
+/* 缩略图样式微调（保持响应式） */
+.post-image img {
+  border-radius: 16px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: opacity 0.2s;
+}
+
+.post-image-normal img,
+.post-image-small img,
+.post-image-short img {
+  margin-bottom: 1rem;
+}
+
+/* 标签区域优化 */
+.blog-tags {
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e9ecef;
+  font-size: 0.8rem;
+}
+
+.blog-tags a {
+  background: #eef2ff;
+  padding: 0.2rem 0.7rem;
+  border-radius: 30px;
+  color: #0d6efd;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.blog-tags a:hover {
+  background: #0d6efd;
+  color: white;
+}
+
+/* 响应式：小屏幕减小内边距 */
+@media (max-width: 768px) {
+  .post-preview {
+    padding: 1.2rem;
+    border-radius: 20px;
+  }
+  .post-preview .post-title {
+    font-size: 1.3rem;
+  }
+}
