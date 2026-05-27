@@ -114,3 +114,91 @@
     padding: 0.2rem 0.7rem;
   }
 }
+
+
+/* 正文：增加行高、字体柔和、最大宽度限制 */
+.blog-post {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #333;
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+/* 标题层次 */
+.blog-post h1, .blog-post h2, .blog-post h3 {
+    margin-top: 1.8em;
+    margin-bottom: 0.6em;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+}
+
+/* 引用块美化 */
+.blog-post blockquote {
+    background: #f9f9f9;
+    border-left: 5px solid #2a7ae2;
+    padding: 0.8em 1.5em;
+    font-style: normal;
+    color: #555;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 代码块 */
+.blog-post pre {
+    background: #2d2d2d;
+    color: #f8f8f2;
+    border-radius: 12px;
+    padding: 1.2em;
+    font-size: 0.9rem;
+}
+
+.blog-post img {
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin: 1.5em auto;
+    display: block;
+}
+
+/* 平滑滚动 */
+html {
+    scroll-behavior: smooth;
+}
+
+.blog-tags {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eaecef;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.blog-tags span { font-weight: bold; margin-right: 0.8rem; }
+.blog-tags a {
+    background: #eef2fa;
+    padding: 0.25rem 0.8rem;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    color: #2a7ae2;
+    transition: all 0.2s;
+}
+.blog-tags a:hover {
+    background: #2a7ae2;
+    color: white;
+    text-decoration: none;
+}
+.pagination.blog-pager {
+    justify-content: space-between;
+    margin: 3rem 0;
+}
+.page-link {
+    border-radius: 40px;
+    padding: 0.6rem 1.5rem;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    color: #2a7ae2;
+    font-weight: 500;
+}
+.page-link:hover {
+    background-color: #2a7ae2;
+    color: white;
+}
