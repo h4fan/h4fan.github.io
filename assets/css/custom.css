@@ -332,3 +332,75 @@ pre::-webkit-scrollbar-thumb {
         padding: 0.2rem 0.7rem;
     }
 }
+
+/* ========================================
+   修复语法高亮（深色主题适配）
+   适用于 rouge / pygments 生成的类
+   ======================================== */
+
+/* 基础代码块环境（你已经有了，但这里确保所有高亮内部文字为浅色） */
+.highlight,
+.highlight pre,
+.highlight code {
+    background-color: #1e2a36 !important;
+    color: #e4eef5 !important;
+}
+
+/* ----- 常用高亮类（根据 rougue 默认输出调整）----- */
+.highlight .err { color: #f07178; }          /* 错误 */
+.highlight .k, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt, .highlight .keyword {
+    color: #c792ea;                          /* 关键字：紫色 */
+    font-weight: 500;
+}
+.highlight .n, .highlight .na, .highlight .nb, .highlight .nc, .highlight .no, .highlight .nd, .highlight .ni, .highlight .ne, .highlight .nf, .highlight .nl, .highlight .nn, .highlight .nx, .highlight .py, .highlight .nt {
+    color: #e4eef5;                          /* 普通标识符：白色 */
+}
+.highlight .s, .highlight .s1, .highlight .s2, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .se, .highlight .sh, .highlight .si, .highlight .sx, .highlight .sr, .highlight .ss {
+    color: #c3e88d;                          /* 字符串：浅绿色 */
+}
+.highlight .c, .highlight .c1, .highlight .cm, .highlight .cp, .highlight .cs {
+    color: #697098;                          /* 注释：灰蓝色 */
+    font-style: italic;
+}
+.highlight .o, .highlight .ow {
+    color: #89ddff;                          /* 运算符：青色 */
+}
+.highlight .p, .highlight .pf {
+    color: #e4eef5;                          /* 括号、标点：白色 */
+}
+.highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .mo {
+    color: #f78c6c;                          /* 数字：橙色 */
+}
+.highlight .gd {
+    color: #f07178;
+    background-color: #3a2a2a;
+}
+.highlight .gi {
+    color: #c3e88d;
+    background-color: #2a3a2a;
+}
+.highlight .gu {
+    color: #89ddff;
+}
+.highlight .il {
+    color: #f78c6c;
+}
+
+/* 针对 language-plaintext（纯文本）确保就是基础颜色 */
+.language-plaintext.highlighter-rouge,
+.language-plaintext.highlighter-rouge code {
+    color: #e4eef5 !important;
+    background: #1e2a36 !important;
+}
+
+/* 如果代码块是 plaintext 且没有额外的高亮 span，直接让所有文字可见 */
+.highlight .err,
+.highlight .k,
+.highlight .s,
+.highlight .c,
+.highlight .o,
+.highlight .p,
+.highlight .m,
+.highlight .n {
+    color: inherit;  /* 继承 pre 的颜色，防止被浏览器默认样式覆盖 */
+}
