@@ -76,3 +76,12 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-include-cache
+  - jekyll-minifier
+
+jekyll-minifier:
+  remove_comments: true          # 移除HTML注释
+  remove_multi_spaces: true      # 移除多余空格
+  remove_intertag_spaces: true   # 移除HTML标签间的空格
+  compress_css: true             # 压缩内联CSS
+  compress_javascript: true      # 压缩内联JavaScript
+  preserve_line_breaks: false    # 不保留换行符
