@@ -20,11 +20,10 @@ permalink: /:year/:month/:day/:title.html
 navbar-links:
   Tags: "tags"
   Archive: "archive"
-  Story: "https://blog.tcp.im"
+  Tools: "https://m.tcp.im"
  
 social-network-links:
   rss: true  # remove this line if you don't want to show an RSS link at the bottom
-  #mastodon: infosec.exchange/@maodun
   github: h4fan
   email: "techsecfan@outlook.com"
 
