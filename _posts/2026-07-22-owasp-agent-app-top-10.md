@@ -292,3 +292,4 @@ agent目标劫持，简单讲，就是让agent去干了不是它本来要做的�
 而由于用户prompt和system prompt可能没有或者难以区分，类似于sql injection，导致prompt injection成为最常见的一类漏洞。  
 总结一句话，就是检测验证，零信任。
 
+https://genai.owasp.org
