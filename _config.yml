@@ -3,7 +3,7 @@ highlighter: rouge
 kramdown:
   input: GFM
 
-remote_theme: h4fan/beautiful-jekyll
+remote_theme: h4fan/my-jekyll-theme
 
 minimal_mistakes_skin    : "default"
 
