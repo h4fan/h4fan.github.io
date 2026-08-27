@@ -1,5 +1,5 @@
 ---
-layout: home
-title: h4fan security
-subtitle: blog about web sec , bug bounty
+layout: archive
+title: 归档
+permalink: /archive/
 ---
