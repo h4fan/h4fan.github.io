@@ -18,6 +18,7 @@ baseurl: "" # subpath of the site, e.g. "/blog" (leave it blank "" if you're sit
 permalink: /:year/:month/:day/:title.html
 
 navbar-links:
+  Index: "/"
   Tags: "tags"
   Archive: "archive"
   Tools: "https://m.tcp.im"
