@@ -21,6 +21,7 @@ navbar-links:
   Index: "/"
   Tags: "tags"
   Archive: "archive"
+  Tech: "/Tech/"
   HackerDefense: "HackerDefense"
   FabDefense: "FabDefense"
   Tools: "https://m.tcp.im"
